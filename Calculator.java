@@ -9,53 +9,62 @@ public class Calculator {
 
         FileReader fr = new FileReader("input.txt");
         Scanner sc = new Scanner(fr);
-        String[] arr = sc.nextLine().split(" ");
-        fr.close();
-        File file = new File("output.txt");
-        FileWriter fw = new FileWriter(file);
-        boolean flag = true;
-        double first_number, second_number;
-        try {
-           Double.parseDouble(arr[0]);
-           Double.parseDouble(arr[2]);
-        } catch (NumberFormatException nfe) {
-            flag = false;
-            fw.write("Error! Not number");
-            fw.close();
-        }
-        if (flag) {
-            first_number = Double.parseDouble(arr[0]);
-            second_number = Double.parseDouble(arr[2]);
-
+        FileWriter fw = null;
+        StringBuilder answer_file = new StringBuilder();
+        while (sc.hasNextLine()) {
+            String[] arr = sc.nextLine().split(" ");
+            fr.close();
+            File file = new File("output.txt");
+            fw = new FileWriter(file);
+            boolean flag = true;
+            double first_number, second_number;
             try {
-                if (arr[1].length() != 1 || (arr[1].charAt(0) != '+' && arr[1].charAt(0) != '-' && arr[1].charAt(0) != '*' && arr[1].charAt(0) != '/')) {
-                    throw new MyException("Operation Error!");
-                }
-            } catch (MyException ms) {
+                Double.parseDouble(arr[0]);
+                Double.parseDouble(arr[2]);
+            } catch (NumberFormatException nfe) {
                 flag = false;
-                fw.write("Operation Error!");
-                fw.close();
+                answer_file.append(String.join(" ", arr)).append(" = Error! Not number\n");
+
             }
             if (flag) {
-                if (arr[1].charAt(0) == '+') {fw.write((first_number + second_number) + "\n");}
-                else if (arr[1].charAt(0) == '-') {fw.write((first_number - second_number) + "\n");}
-                else if (arr[1].charAt(0) == '*') {fw.write((first_number * second_number) + "\n");}
-                else if (arr[1].charAt(0) == '/') {
-                    try {
-                        if (second_number == 0){
-                            throw new Exception();
-                        }
-                    } catch (Exception ex) {
-                        flag=false;
-                        fw.write("Error! Division by zero");
+                first_number = Double.parseDouble(arr[0]);
+                second_number = Double.parseDouble(arr[2]);
+
+                try {
+                    if (arr[1].length() != 1 || (arr[1].charAt(0) != '+' && arr[1].charAt(0) != '-' && arr[1].charAt(0) != '*' && arr[1].charAt(0) != '/')) {
+                        throw new MyException("Operation Error!");
                     }
-                    if (flag){
-                        fw.write((first_number / second_number) + "\n");
+                } catch (MyException ms) {
+                    flag = false;
+                    answer_file.append(String.join(" ", arr)).append(" = Operation Error!\n");
+
+                }
+                if (flag) {
+                    if (arr[1].charAt(0) == '+') {
+                        answer_file.append(String.join(" ", arr)).append(" = ").append(first_number + second_number).append("\n");
+                    } else if (arr[1].charAt(0) == '-') {
+                        answer_file.append(String.join(" ", arr)).append(" = ").append(first_number - second_number).append("\n");
+                    } else if (arr[1].charAt(0) == '*') {
+                        answer_file.append(String.join(" ", arr)).append(" = ").append(first_number * second_number).append("\n");
+                    } else if (arr[1].charAt(0) == '/') {
+                        try {
+                            if (second_number == 0) {
+                                throw new Exception();
+                            }
+                        } catch (Exception ex) {
+                            flag = false;
+                            answer_file.append(String.join(" ", arr)).append(" = Error! Division by zero\n");
+                        }
+                        if (flag) {
+                            answer_file.append(String.join(" ", arr)).append(" = ").append(first_number / second_number).append("\n");
+                        }
                     }
                 }
-                fw.close();
             }
         }
+        assert fw != null;
+        fw.write(String.valueOf(answer_file));
+        fw.close();
     }
 }
 
