@@ -20,7 +20,8 @@ public class Calculator {
            Double.parseDouble(arr[2]);
         } catch (NumberFormatException nfe) {
             flag = false;
-            System.out.println("Error! Not number");
+            fw.write("Error! Not number");
+            fw.close();
         }
         if (flag) {
             first_number = Double.parseDouble(arr[0]);
@@ -32,7 +33,8 @@ public class Calculator {
                 }
             } catch (MyException ms) {
                 flag = false;
-                System.out.println("Operation Error!");
+                fw.write("Operation Error!");
+                fw.close();
             }
             if (flag) {
                 if (arr[1].charAt(0) == '+') {fw.write((first_number + second_number) + "\n");}
@@ -45,7 +47,7 @@ public class Calculator {
                         }
                     } catch (Exception ex) {
                         flag=false;
-                        System.out.println("Error! Division by zero");
+                        fw.write("Error! Division by zero");
                     }
                     if (flag){
                         fw.write((first_number / second_number) + "\n");
