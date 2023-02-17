@@ -1,10 +1,14 @@
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Calculator {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Scanner sc = new Scanner(System.in);
+        FileReader fr = new FileReader("input.txt");
+        Scanner sc = new Scanner(fr);
         String[] arr = sc.nextLine().split(" ");
+        fr.close();
         boolean flag = true;
         double first_number, second_number;
         try {
