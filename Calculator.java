@@ -12,7 +12,6 @@ public class Calculator {
         String[] arr = sc.nextLine().split(" ");
         fr.close();
         File file = new File("output.txt");
-        //file.createNewFile();
         FileWriter fw = new FileWriter(file);
         boolean flag = true;
         double first_number, second_number;
