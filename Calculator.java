@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Calculator {
-    public static void main(String[] args) throws MyException {
+    public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         String[] arr = sc.nextLine().split(" ");
@@ -20,8 +20,6 @@ public class Calculator {
 
             try {
                 if (arr[1].length() != 1 || (arr[1].charAt(0) != '+' && arr[1].charAt(0) != '-' && arr[1].charAt(0) != '*' && arr[1].charAt(0) != '/')) {
-                    System.out.println(arr[1]);
-                    System.out.println(arr[1].charAt(0));
                     throw new MyException("Operation Error!");
                 }
             } catch (MyException ms) {
