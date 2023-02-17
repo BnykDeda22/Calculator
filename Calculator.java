@@ -1,4 +1,6 @@
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -9,6 +11,9 @@ public class Calculator {
         Scanner sc = new Scanner(fr);
         String[] arr = sc.nextLine().split(" ");
         fr.close();
+        File file = new File("output.txt");
+        //file.createNewFile();
+        FileWriter fw = new FileWriter(file);
         boolean flag = true;
         double first_number, second_number;
         try {
@@ -31,9 +36,9 @@ public class Calculator {
                 System.out.println("Operation Error!");
             }
             if (flag) {
-                if (arr[1].charAt(0) == '+') {System.out.println(first_number + second_number);}
-                else if (arr[1].charAt(0) == '-') {System.out.println(first_number - second_number);}
-                else if (arr[1].charAt(0) == '*') {System.out.println(first_number * second_number);}
+                if (arr[1].charAt(0) == '+') {fw.write((first_number + second_number) + "\n");}
+                else if (arr[1].charAt(0) == '-') {fw.write((first_number - second_number) + "\n");}
+                else if (arr[1].charAt(0) == '*') {fw.write((first_number * second_number) + "\n");}
                 else if (arr[1].charAt(0) == '/') {
                     try {
                         if (second_number == 0){
@@ -44,9 +49,10 @@ public class Calculator {
                         System.out.println("Error! Division by zero");
                     }
                     if (flag){
-                        System.out.println(first_number/second_number);
+                        fw.write((first_number / second_number) + "\n");
                     }
                 }
+                fw.close();
             }
         }
     }
